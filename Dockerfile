@@ -1,5 +1,5 @@
-FROM alpine
-MAINTAINER Daniel Guerra <daniel.guerra69@gmail.com>
+FROM container4armhf/armhf-alpine
+MAINTAINER Frederic LESUR <contact@memiks.fr>
 
 # add openssh and clean
 RUN apk add --update openssh \
