@@ -1,4 +1,4 @@
-# Alpine ssh server
+# Alpine ARMHF ssh server
 
 ## Instructions
 
