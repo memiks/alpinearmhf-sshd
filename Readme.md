@@ -20,13 +20,13 @@ ssh-add id_rsa
 
 Then the start sshd service on the dockerhost (check the tags for alpine versions)
 ```bash
-docker run -p 4848:22 --name alpine-sshd --hostname alpine-sshd --volumes-from ssh-container  -d alpinearmhf-sshd
+docker run -p 4848:22 --name alpinearmhf-sshd --hostname alpinearmhf-sshd --volumes-from ssh-container  -d alpinearmhf-sshd
 ```
 
 ### Password based
 
 ```bash
-docker run -p 4848:22 --name alpine-sshd --hostname alpine-sshd -d alpinearmhf-sshd
+docker run -p 4848:22 --name alpinearmhf-sshd --hostname alpinearmhf-sshd -d alpinearmhf-sshd
 docker exec -ti docker-sshd passwd
 ```
 
