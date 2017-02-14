@@ -1,7 +1,8 @@
 FROM container4armhf/armhf-alpine
 MAINTAINER Frederic LESUR <contact@memiks.fr>
 # Install openrc
-    apk update && apk add openrc && apk clean &&\
+RUN apk update &&\
+    apk add openrc &&\
 # Tell openrc its running inside a container, till now that has meant LXC
     sed -i 's/#rc_sys=""/rc_sys="lxc"/g' /etc/rc.conf &&\
 # Tell openrc loopback and net are already there, since docker handles the networking
@@ -18,14 +19,16 @@ MAINTAINER Frederic LESUR <contact@memiks.fr>
     sed -i 's/cgroup_add_service /# cgroup_add_service /g' /lib/rc/sh/openrc-run.sh
 
 # add openssh and clean
-RUN apk add --update openssh \
-&& rm  -rf /tmp/* /var/cache/apk/*
+RUN apk add --update openssh &&\
+    rm  -rf /tmp/* /var/cache/apk/*
 # add entrypoint script
+RUN rc-update add sshd default
+RUN rc-update add crond default
+
 ADD docker-entrypoint.sh /usr/sbin
 #make sure we get fresh keys
 RUN rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
 
 EXPOSE 22
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["/usr/sbin/sshd","-D"]
-#CMD ["/sbin/init"]
+CMD ["/sbin/init"]
